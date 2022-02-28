@@ -1,0 +1,11 @@
+pacman -Sy
+pacman -S --noconfirm --needed base-devel glibc git
+groupadd users
+useradd -m builder
+sudo -i echo 'builder  ALL=(ALL:ALL) ALL' >> /etc/sudoers
+passwd -d builder
+cd /home/builder
+sudo -u builder git clone https://aur.archlinux.org/pikaur.git
+cd pikaur
+sudo -u builder makepkg --noconfirm -fsri
+sudo -u builder pikaur --noconfirm -S seafile-server seahub
